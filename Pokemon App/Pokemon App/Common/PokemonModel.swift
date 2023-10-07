@@ -8,9 +8,10 @@
 import Foundation
 
 struct PokemonModel: Codable {
+    let id: Int
     let name: String
     let imageUrl: String
     let type: String
-    let height: Double
-    let weight: Double
+    let height: Int
+    let weight: Int
 }
