@@ -24,7 +24,7 @@ class PokemonTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
 
-    func configure(with pokemon: PokemonModel) {
+    func configure(with pokemon: PokemonResponseModel) {
         self.cellLabel.text = pokemon.name
     }
 }
