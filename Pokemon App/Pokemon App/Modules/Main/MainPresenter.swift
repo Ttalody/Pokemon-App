@@ -10,7 +10,7 @@ import UIKit
 
 class MainPresenter: MainPresenterProtocol {
 
-    var view: MainViewProtocol?
+    weak var view: MainViewProtocol?
     
     var interactor: MainInteractorProtocol?
     
@@ -22,7 +22,18 @@ class MainPresenter: MainPresenterProtocol {
     }
     
     func requestPokemonList() {
-        print("request")
+        interactor?.getPokemonList()
+        print("presenter.requestPokemonList")
+    }
+    
+    func responseResult(pokemons: [PokemonPreviewModel]?, error: Error?) {
+        if let pokemons = pokemons {
+            print("response success")
+            self.view?.showList(pokemons: pokemons)
+        } else if let error = error {
+            self.view?.showError(error: error)
+            print("response error")
+        }
     }
     
     func showDetailViewController() {

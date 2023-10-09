@@ -13,10 +13,12 @@ protocol MainViewProtocol: AnyObject {
     
     var presenter: MainPresenterProtocol? { get set }
     
+    var pokemonArray: [PokemonPreviewModel] { get set }
+    
     func tableCellClicked()
     
-    func showList()
-    func showError()
+    func showList(pokemons: [PokemonPreviewModel])
+    func showError(error: Error)
 }
 
 protocol MainInteractorProtocol: AnyObject {
@@ -33,11 +35,13 @@ protocol MainPresenterProtocol: AnyObject {
     
     func requestPokemonList()
     
+    func responseResult(pokemons: [PokemonPreviewModel]?, error: Error?)
+    
     func showDetailViewController()
 }
 
 protocol MainRouterProtocol: AnyObject {
-    var viewController: UIViewController? { get set }
+    static func createModule() -> MainViewController
     
     func openDetailViewController(at indexPath: IndexPath)
 }

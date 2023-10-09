@@ -11,11 +11,22 @@ class PokemonTableViewCell: UITableViewCell {
     
     static let identifier = "PokemonTableViewCell"
     
-    @IBOutlet weak var cellLabel: UILabel!
+    var cellLabel: UILabel = {
+        let label = UILabel()
+        label.frame = CGRect(x: 8, y: 8, width: 200, height: 70)
+        label.numberOfLines = 0
+        label.textColor = .label
+        label.font = .systemFont(ofSize: 24, weight: .semibold)
+        return label
+    }()
+//    @IBOutlet weak var cellLabel: UILabel!
 
     override func awakeFromNib() {
         super.awakeFromNib()
         
+        self.backgroundColor = .green
+        
+        self.addSubview(cellLabel)
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
