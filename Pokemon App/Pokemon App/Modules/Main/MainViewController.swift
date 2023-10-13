@@ -13,11 +13,12 @@ class MainViewController: UIViewController, MainViewProtocol {
     
     var presenter: MainPresenterProtocol?
     
-    var pokemonArray = [PokemonPreviewModel]()
+    var pokemonArray: [PokemonPreviewModel] = [PokemonPreviewModel.init(name: "Gaga", url: "")]
     
     private var pokemonTableView: UITableView = {
         var table = UITableView()
-        table.register(PokemonTableViewCell.self, forCellReuseIdentifier: PokemonTableViewCell.identifier)
+//        table.register(PokemonTableViewCell.self, forCellReuseIdentifier: PokemonTableViewCell.identifier)
+        table.register(UINib(nibName: "PokemonTableViewCell", bundle: nil), forCellReuseIdentifier: PokemonTableViewCell.identifier)
         return table
     }()
    
@@ -30,9 +31,11 @@ class MainViewController: UIViewController, MainViewProtocol {
         
         pokemonTableView.dataSource = self
         pokemonTableView.delegate = self
+            
+        print("viewDidLoad: \(pokemonArray.count)")
         
-        print(pokemonArray.count)
     }
+    
     
     
     
@@ -45,12 +48,12 @@ class MainViewController: UIViewController, MainViewProtocol {
     }
 
     func showList(pokemons: [PokemonPreviewModel]) {
-        self.pokemonArray = pokemons
-        print("showList")
-        print(self.pokemonArray.count)
+        self.pokemonArray.append(contentsOf: pokemons)
+        print("showList \(self.pokemonArray.count)")
+        
         DispatchQueue.main.async {
-            self.pokemonTableView.reloadData()
-            print(self.pokemonArray.count)
+            self.pokemonTableView.reloadData()  
+            print("main.async \(self.pokemonArray.count)")
             
         }
     }
@@ -66,14 +69,25 @@ class MainViewController: UIViewController, MainViewProtocol {
 
 extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print(pokemonArray.count)
+        print("numberOfRows \(pokemonArray.count)")
         return pokemonArray.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: PokemonTableViewCell.identifier) as? PokemonTableViewCell else {return UITableViewCell()}
-        cell.cellLabel.text = pokemonArray[indexPath.row].name
+        
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: PokemonTableViewCell.identifier) as? PokemonTableViewCell
+                
+        else {return UITableViewCell()}
+        print("cellForRowAt \(pokemonArray.count)")
+        
+        cell.configure(with: pokemonArray[indexPath.row])
+        
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        
+        60
     }
     
 //    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {

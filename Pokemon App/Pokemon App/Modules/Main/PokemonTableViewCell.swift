@@ -2,40 +2,31 @@
 //  PokemonTableViewCell.swift
 //  Pokemon App
 //
-//  Created by Артур on 7.10.23.
+//  Created by Артур on 14.10.23.
 //
 
 import UIKit
 
 class PokemonTableViewCell: UITableViewCell {
     
-    static let identifier = "PokemonTableViewCell"
     
-    var cellLabel: UILabel = {
-        let label = UILabel()
-        label.frame = CGRect(x: 8, y: 8, width: 200, height: 70)
-        label.numberOfLines = 0
-        label.textColor = .label
-        label.font = .systemFont(ofSize: 24, weight: .semibold)
-        return label
-    }()
-//    @IBOutlet weak var cellLabel: UILabel!
+    static let identifier = "PokemonTableViewCell"
 
+    @IBOutlet weak var cellLabel: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
+        // Initialization code
         
         self.backgroundColor = .green
+    }
+
+    func configure(with pokemon: PokemonPreviewModel) {
+        cellLabel?.text = pokemon.name
+//        self.backgroundColor = .blue
+        if let pokemonName = pokemon.name {
+            print(pokemonName)
+        } else {print("net")}
         
-        self.addSubview(cellLabel)
     }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
-
-    func configure(with pokemon: PokemonResponseModel) {
-        self.cellLabel.text = pokemon.name
-    }
+    
 }

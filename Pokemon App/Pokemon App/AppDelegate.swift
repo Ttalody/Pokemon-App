@@ -17,11 +17,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let mainModule = MainRouter.createModule()
         
-//        let navController = UINavigationController()
-//        navController.viewControllers = [mainModule]
+        let navController = UINavigationController()
+        navController.viewControllers = [mainModule]
         
         window = UIWindow(frame: UIScreen.main.bounds)
-        window?.rootViewController = mainModule
+        window?.rootViewController = navController
         window?.makeKeyAndVisible()
         
         return true
